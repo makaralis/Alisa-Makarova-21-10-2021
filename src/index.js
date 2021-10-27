@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { FirebaseAppProvider } from "reactfire";
 import { createStore } from 'redux';
-import allReducers from './redusers';
+import allReducers from './reducers';
 import { Provider } from 'react-redux';
 
 const firebaseConfig = {
