@@ -1,7 +1,7 @@
  # welcome to weather web app
  
- The app allows you to see current weather and 5-day daily forecast.<br />
- You can also to see the weather of your location simply by enabling the browser to use your location.<br />
+ The app allows you to see current weather and 5-day daily forecast of different cities.<br />
+ You can also see the weather of your location simply by enabling the browser to use your location.<br />
  You can save each city from the list to favorites by clicking on the heart icon.<br />
  You can alse switch the theme or the temperature units.<br />
  
