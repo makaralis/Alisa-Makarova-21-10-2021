@@ -6,7 +6,7 @@ import WeatherCard from "../components/WeatherCard";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {  days, setMyCityData, getForecast } from "../utils";
+import {  days, setMyCityData } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { chooseCity } from "../actions";
 import useTheme from "../hooks/useTheme";
@@ -54,6 +54,25 @@ const HomePage = () => {
         }
     }
 
+    const getForecast = async (key) => {
+        try {
+            const res = await axios.get(
+            `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            );
+        
+            const currentRes = await axios.get(
+            `https://dataservice.accuweather.com/currentconditions/v1/${key}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            );
+        
+            if (res && currentRes) {
+                setForecast(res.data.DailyForecasts);
+                setCurrentForecast(currentRes.data[0].WeatherText);
+            }
+        }
+        catch (err) {
+            toast.error('Error while getting information about forecast', toast.POSITION.BOTTOM_RIGHT);
+        }
+    }
     
 
     const handleAutocompleteChange =  (event , val) => {
@@ -70,13 +89,13 @@ const HomePage = () => {
             setChosenCity(city.EnglishName);
             setCityKey(city.Key);
         
-            getForecast(city.Key, (val) => setForecast(val), (val) => setCurrentForecast(val));
+            getForecast(city.Key);
         }
     }
 
     useEffect( () => {
         if (geoLocation.loaded && geoLocation.error === undefined && chosenCityRed.data.length < 1) {
-            setMyCityData(geoLocation, (val) => setIsCitySelected(val), (val) => setChosenCity(val), (val) => setCityKey(val), (val) => setForecast(val), (val) => setCurrentForecast(val));
+            setMyCityData(geoLocation, (val) => setIsCitySelected(val), (val) => setChosenCity(val), (val) => setCityKey(val), getForecast);
         }
         
         getCities()}
