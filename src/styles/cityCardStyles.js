@@ -11,7 +11,7 @@ export const StyledGridCard = styled(Grid)(({theme}) => ({
     paddingRight: '16px',
     boxShadow: '0 2px 9px 0 #5294ff',
     [theme.breakpoints.up('xs')]: {
-        marginBottom: '15px',
+        marginBottom: '65px !important',
         marginLeft: '20px !important',
         width: '100%',
         paddingTop: '18px !important',

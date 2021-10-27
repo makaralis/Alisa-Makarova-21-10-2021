@@ -35,21 +35,21 @@ const  FavoritesPage = () => {
   useItems("Favorites", setFirebaseData, firebaseData);
 
   return (
-    <>
+    <Container>
       {theme?.modeStatus !== 'loading' &&
-        <Container>
-           <Typography variant='h2' sx={{marginTop: '20px', marginBottom: '12px', fontWeight:'bold'}}>List of favorite cities</Typography>
-           <StyledGrid container justifyContent='center' spacing={{ xs: 2, md: 3, lg: 6, xl: 2 }}>
+            <>
+            <Typography variant='h2' sx={{marginTop: '20px', marginBottom: '30px', fontWeight:'bold',  textAlign: 'center'}}>List of favorite cities</Typography>
+            <StyledGrid container justifyContent='center' spacing={{ xs: 2, md: 3, lg: 6, xl: 2 }}>
 
-            {firebaseData
-              .map(item => 
-                  <CityCard name={item.city} firebaseId={item.id} key={item.key} forecast={item.forecast} currentForecast={item.currentWeather} />
-                )
-            }
-            </StyledGrid>
-        </Container>
-      }
-    </>
+              {firebaseData
+                .map(item => 
+                    <CityCard name={item.city} firebaseId={item.id} key={item.key} forecast={item.forecast} currentForecast={item.currentWeather} />
+                  )
+              }
+              </StyledGrid>
+              </>
+        }
+    </Container>
   );
 }
 
