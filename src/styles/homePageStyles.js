@@ -2,10 +2,6 @@ import { styled } from "@mui/system";
 import { Grid } from '@mui/material';
 
 export const AutocompleteWrapper = styled('div')(({theme}) => `
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
 `,)
