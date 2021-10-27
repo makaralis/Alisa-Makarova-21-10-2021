@@ -3,6 +3,7 @@
  The app helps allows you to see current weather and 5-day daily forecast.
  You can also to see the weather of your location simply by enabling the browser to use your location.
  You can save each city from the list to favorites by clicking on the heart icon.
+ You can alse switch the theme or the temperature units.
  
  Check-out the deployment link: 
 
