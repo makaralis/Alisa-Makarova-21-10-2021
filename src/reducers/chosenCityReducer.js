@@ -1,15 +1,15 @@
-import { chooseCityAction } from "../actions/consts";
+import { CHOOSE_CITY } from "../actions/consts";
 
-const initialState = {
+const initialCityState = {
     data: [],
     key: '',
     forecast: [],
     currentForecast: []
   };
   
-  const chosenCityReducer = (state = initialState, action) => {
+  const chosenCityReducer = (state = initialCityState, action) => {
     switch (action.type) {
-      case chooseCityAction:
+      case CHOOSE_CITY:
         return {
             data: action.data,
             key: action.key,

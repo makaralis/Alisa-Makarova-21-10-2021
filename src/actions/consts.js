@@ -1,1 +1,1 @@
-export const chooseCityAction = "CHOOSE_CITY";
+export const CHOOSE_CITY = "CHOOSE_CITY";

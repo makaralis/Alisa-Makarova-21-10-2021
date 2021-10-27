@@ -1,9 +1,9 @@
 
-import { chooseCityAction } from "./consts";
+import { CHOOSE_CITY } from "./consts";
 
 export const chooseCity = (option, keyCode, forecast, current) => {
     return {
-      type: chooseCityAction,
+      type: CHOOSE_CITY,
       data: option,
       key: keyCode,
       fiveDaysForecast: forecast,

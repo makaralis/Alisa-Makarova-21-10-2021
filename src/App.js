@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router, Switch, Route
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import FavesPage from "./pages/FavesPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import './App.css';
 import Navbar from "./components/Navbar";
 import { Container } from "./styles/globalStyles";
@@ -25,7 +25,7 @@ function App() {
           <Navbar/>
             <Switch>
                 <Route path='/' exact component={HomePage}/>
-                <Route path='/favorite-cities' component={FavesPage}/>
+                <Route path='/favorite-cities' component={FavoritesPage}/>
             </Switch>
         </Container>
       }

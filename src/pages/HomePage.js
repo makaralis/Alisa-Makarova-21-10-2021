@@ -1,17 +1,20 @@
+import "firebase/firestore";
+import { useFirestore } from "reactfire";
 import { useState, useEffect } from "react";
-import { Autocomplete, TextField, Typography } from "@mui/material";
+import { Autocomplete, IconButton, TextField, Typography } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import useGeoLocation from '../hooks/useGeoLocation';
 import { AutocompleteWrapper, StyledGrid, Container } from "../styles/homePageStyles";
 import WeatherCard from "../components/WeatherCard";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {  days, setMyCityData } from "../utils";
+import {  days, setMyCityData, addToFavorites } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { chooseCity } from "../actions";
 import useTheme from "../hooks/useTheme";
-import useTempUnit from '../hooks/useTempUnit'
-
+import useTempUnit from '../hooks/useTempUnit';
 
 const HomePage = () => {
     const [citiesOptions, setCitiesOptions] = useState([]);
@@ -21,6 +24,32 @@ const HomePage = () => {
     const [currentForecast, setCurrentForecast] = useState([]);
     const [isCitySelected, setIsCitySelected] = useState(false);
 
+    const [firebaseData, setFirebaseData] = useState([]);
+    const db = useFirestore();
+    
+    const useItems = (col, callback, items) => {
+        useEffect(() => {
+          const fetchData = async () => {
+            await db
+              .collection(col)
+              .onSnapshot((snapshot) => {
+                let listItems = [];
+    
+                listItems = snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  ...doc.data(),
+                }));
+                callback(listItems);
+              });
+          };
+          fetchData();
+        }, []);
+        
+        return items;
+      };
+    
+    useItems("Favorites", setFirebaseData, firebaseData);
+
     const theme = useTheme();
     const temp = useTempUnit();
 
@@ -28,7 +57,6 @@ const HomePage = () => {
     const dispatch = useDispatch();
 
     const geoLocation = useGeoLocation();
-
 
     const getCities = async () => {
         try {
@@ -127,6 +155,13 @@ const HomePage = () => {
                         <> 
                             <Typography variant='h2' sx={{marginBottom: '12px', fontWeight:'bold'}}>{chosenCityRed.data}</Typography>
                             <Typography variant='h4' sx={{marginBottom: '20px'}}>Today is  {chosenCityRed.currentForecast}</Typography>
+
+                            <Typography variant='body1' sx={{marginBottom: '10px'}}>Add to favorites</Typography>
+
+                            <IconButton onClick={() => addToFavorites(db, firebaseData, chosenCityRed)} sx={{marginBottom: '40px'}}>
+                                {firebaseData.findIndex(x => x.city === chosenCityRed.data) === -1
+                                ? <FavoriteBorderIcon fontSize="large" color={"primary"}/>
+                                : <FavoriteIcon fontSize="large" color={"primary"}/>}</IconButton>
                     
                             <StyledGrid container justifyContent='center' spacing={{ xs: 2, md: 3, lg: 6, xl: 2 }}>
                                 {chosenCityRed.forecast.map((item, index) => 
