@@ -23,8 +23,7 @@
 
 ## Screen of favorite cities:
 
-![image](https://user-images.githubusercontent.com/60109725/139162524-9df12e76-fb0e-4468-9fea-89d255c8dae1.png)
-
+![image](https://user-images.githubusercontent.com/60109725/139162586-941e1039-078d-4a67-837f-43be0206c9af.png)
 
 
 Setup:
