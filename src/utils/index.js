@@ -12,3 +12,5 @@ export const findMyCity = async (lat, ln) => {
         toast.error('Error while getting a current location', toast.POSITION.BOTTOM_RIGHT);
     }
 }
+
+export const  days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
