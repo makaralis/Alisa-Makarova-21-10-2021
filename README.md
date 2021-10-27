@@ -15,7 +15,7 @@
 - Firebase
 - Deployed to netlify
 
-
+I have used the apis of https://developer.accuweather.com/
  
  ## Main screen: 
  
