@@ -29,4 +29,4 @@ I have used the apis of https://developer.accuweather.com/
 
 Setup:
 
-run `npm i && npm start` for both client and server side to start the app
+run `npm i && npm start` to start the app
