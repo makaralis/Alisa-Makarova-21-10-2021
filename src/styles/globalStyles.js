@@ -9,14 +9,6 @@ export const Container = styled('div')(({theme}) => `
     overflow-y: scroll;
 `,)
 
- export const SwitchContainer = styled('div')(({theme}) => `
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 20px;
-    margin-inline-start: 10px;
-`,)
 
 export const StyledGridCard = styled(Grid)(({theme}) => ({
     background: '#fff',
@@ -26,14 +18,15 @@ export const StyledGridCard = styled(Grid)(({theme}) => ({
     boxShadow: '0 2px 9px 0 #5294ff',
     [theme.breakpoints.up('xs')]: {
         marginBottom: '15px',
+        marginLeft: '20px !important',
         width: '100%',
         paddingTop: '18px !important',
     },
     minWidth: 150,
     maxWidth: 220,
-      width: '100%',
-    marginLeft: '20px',
+    width: '100%',
     marginRight: '20px',
+    marginLeft: '20px !important',
     }
 ))
 

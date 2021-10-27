@@ -63,7 +63,7 @@ export const ThemeSwitch = styled(MuiSwitch)(({ theme }) => ({
         color: '#fff',
         transform: 'translateX(22px)',
         '& .MuiSwitch-thumb:before': {
-          content: "'°F'",
+          content: "'°C'",
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -79,7 +79,7 @@ export const ThemeSwitch = styled(MuiSwitch)(({ theme }) => ({
       width: 32,
       height: 32,
       '&:before': {
-        content: "'°C'",
+        content: "'°F'",
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

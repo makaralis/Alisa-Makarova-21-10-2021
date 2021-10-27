@@ -1,0 +1,1 @@
+export const chooseCityAction = "CHOOSE_CITY";

@@ -23,3 +23,11 @@ export const  StyledGrid = styled(Grid)(({theme}) => ({
     marginLeft: '-12px',
     }
 ))
+
+export const Container = styled('div')(({theme}) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+}))
+

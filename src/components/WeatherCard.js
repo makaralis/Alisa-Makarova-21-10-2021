@@ -3,12 +3,10 @@ import useTempUnit from '../hooks/useTempUnit';
 import { StyledGridCard } from '../styles/globalStyles';
 
 
-const WeatherCard = ({minTemp,maxTemp, day, realMinTemp, realMaxTemp}) => {
+const WeatherCard = ({minTemp,maxTemp, day}) => {
   const temp = useTempUnit();
   let minTempStr = minTemp + '°F';
   let maxTempStr = maxTemp + '°F';
-  let realMinTempStr = realMinTemp + '°F';
-  let realMaxTempStr = realMaxTemp + '°F';
 
 
   const fToC = (fahrenheitValue)  => {
@@ -18,8 +16,6 @@ const WeatherCard = ({minTemp,maxTemp, day, realMinTemp, realMaxTemp}) => {
   if (temp?.tempData === 'farenheit') {
     minTempStr = fToC(minTemp) + '°C';
     maxTempStr = fToC(maxTemp) + '°C';
-    realMinTempStr = fToC(realMinTemp) + '°C';
-    realMaxTempStr = fToC(realMaxTemp) + '°C';
   }
 
   return (
@@ -32,8 +28,6 @@ const WeatherCard = ({minTemp,maxTemp, day, realMinTemp, realMaxTemp}) => {
 
         <List>
             <ListItem>{minTempStr} / {maxTempStr}</ListItem>
-            <Typography sx={{paddingLeft: '18px'}}>Really feels like:</Typography>
-            <ListItem>{realMinTempStr} / {realMaxTempStr} </ListItem>
         </List>
      
     </StyledGridCard>

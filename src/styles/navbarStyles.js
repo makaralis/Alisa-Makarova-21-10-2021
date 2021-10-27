@@ -16,3 +16,11 @@ export const StyledLink = styled(Link)(({theme}) => `
     text-decoration: none;
     `,
 )
+
+export const ItemsContainer = styled('div')(({theme}) => `
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center'
+    `,
+)
