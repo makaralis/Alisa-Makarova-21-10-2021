@@ -5,7 +5,7 @@ import { chooseCity } from "../actions";
 
 const findMyCity = async (lat, ln) => {
     try {
-        const res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&q=${lat}%2C%20${ln}`);
+        const res = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&q=${lat}%2C%20${ln}`);
         
         return res.data;
     }
@@ -38,7 +38,7 @@ export const getCities = async (geoLocation, setCitiesOptions, dispatch, chosenC
 
         if (chosenCityRed.data.length < 1 && geoLocation.error !== undefined) {
             const res = await axios.get(
-              `http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
+              `https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
             );
 
       
