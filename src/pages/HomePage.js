@@ -10,7 +10,7 @@ import WeatherCard from "../components/WeatherCard";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {  days, setMyCityData, addToFavorites } from "../utils";
+import {  days, setMyCityData, addToFavorites, getCities } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { chooseCity } from "../actions";
 import useTheme from "../hooks/useTheme";
@@ -39,29 +39,6 @@ const HomePage = () => {
 
     const geoLocation = useGeoLocation();
 
-    const getCities = async () => {
-        try {
-            const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`);
-    
-            setCitiesOptions(res ? res.data : []);
-    
-            if (chosenCityRed.data.length < 1 && geoLocation.error !== undefined) {
-                const res = await axios.get(
-                  `https://cors-anywhere.herokuapp.com/http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
-                );
-    
-          
-                const currentRes = await axios.get(
-                  `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/currentconditions/v1/215854/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
-                );
-          
-               dispatch(chooseCity("Tel Aviv", "215854", res.data.DailyForecasts, currentRes.data[0].WeatherText));
-              }
-        }
-        catch (err) {
-            toast.error('Error while getting locations', toast.POSITION.BOTTOM_RIGHT);
-        }
-    }
 
     const getForecast = async (key) => {
         try {
@@ -107,7 +84,7 @@ const HomePage = () => {
             setMyCityData(geoLocation, (val) => setIsCitySelected(val), (val) => setChosenCity(val), (val) => setCityKey(val), getForecast);
         }
         
-        getCities()}
+        getCities(geoLocation, (val) => setCitiesOptions(val), dispatch, chosenCityRed)}
     , );
 
     useEffect(() => {
