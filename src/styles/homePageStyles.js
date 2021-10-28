@@ -16,7 +16,7 @@ export const  StyledGrid = styled(Grid)(({theme}) => ({
     },
     maxWidth: '100%',
     flexGrow: 1, 
-    marginLeft: '-12px',
+    marginLeft: '10px !important',
     }
 ))
 
