@@ -17,10 +17,12 @@ export const StyledLink = styled(Link)(({theme}) => `
     `,
 )
 
-export const ItemsContainer = styled('div')(({theme}) => `
-    display: flex; 
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center'
-    `,
-)
+export const ItemsContainer = styled('div')(({theme}) => ({
+    [theme.breakpoints.down('sm')]: {
+        display: 'flex',
+    },
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+}))
