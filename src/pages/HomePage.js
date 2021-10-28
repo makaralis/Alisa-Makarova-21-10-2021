@@ -22,7 +22,6 @@ const HomePage = () => {
     const [forecast, setForecast] = useState([]);
     const [currentForecast, setCurrentForecast] = useState([]);
     const [isCitySelected, setIsCitySelected] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     const [firebaseData, setFirebaseData] = useState([]);
     const db = useFirestore();
@@ -30,6 +29,8 @@ const HomePage = () => {
     useItems(db, "Favorites", setFirebaseData, firebaseData);
 
     const chosenCityRed = useSelector((state) => {return state.chosenCityReducer});
+    const [loading, setLoading] = useState(chosenCityRed.data.length < 1 ? true : false);
+
     const dispatch = useDispatch();
 
     const geoLocation = useGeoLocation();
