@@ -91,5 +91,8 @@ export const addToFavorites = (db, firebaseData, chosenCityRed) => {
 }
 
 
+export const fToC = (fahrenheitValue)  => {
+    return Math.round((fahrenheitValue - 32) * 5/9);
+}
 
 export const  days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

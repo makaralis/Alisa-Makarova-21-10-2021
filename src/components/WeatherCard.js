@@ -1,17 +1,13 @@
 import { List, ListItem, Typography, Divider } from '@mui/material';
 import useTempUnit from '../hooks/useTempUnit';
 import { StyledGridCard } from '../styles/globalStyles';
-
+import { fToC } from '../utils';
 
 const WeatherCard = ({minTemp,maxTemp, day}) => {
   const temp = useTempUnit();
   let minTempStr = minTemp + '°F';
   let maxTempStr = maxTemp + '°F';
 
-
-  const fToC = (fahrenheitValue)  => {
-    return Math.round((fahrenheitValue - 32) * 5/9);
-  }
 
   if (temp?.tempData === 'farenheit') {
     minTempStr = fToC(minTemp) + '°C';
