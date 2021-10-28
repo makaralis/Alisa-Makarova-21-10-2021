@@ -10,11 +10,9 @@ import WeatherCard from "../components/WeatherCard";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {  days, setMyCityData, addToFavorites, getCities } from "../utils";
+import { days, setMyCityData, addToFavorites, getCities } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { chooseCity } from "../actions";
-import useTheme from "../hooks/useTheme";
-import useTempUnit from '../hooks/useTempUnit';
 import useItems from "../hooks/useItems";
 
 const HomePage = () => {
@@ -24,15 +22,12 @@ const HomePage = () => {
     const [forecast, setForecast] = useState([]);
     const [currentForecast, setCurrentForecast] = useState([]);
     const [isCitySelected, setIsCitySelected] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [firebaseData, setFirebaseData] = useState([]);
     const db = useFirestore();
-
     
     useItems(db, "Favorites", setFirebaseData, firebaseData);
-
-    const theme = useTheme();
-    const temp = useTempUnit();
 
     const chosenCityRed = useSelector((state) => {return state.chosenCityReducer});
     const dispatch = useDispatch();
@@ -53,6 +48,7 @@ const HomePage = () => {
             if (res && currentRes) {
                 setForecast(res.data.DailyForecasts);
                 setCurrentForecast(currentRes.data[0].WeatherText);
+                setLoading(false);
             }
         }
         catch (err) {
@@ -75,6 +71,7 @@ const HomePage = () => {
             setChosenCity(city.EnglishName);
             setCityKey(city.Key);
         
+            setLoading(true);
             getForecast(city.Key);
         }
     }
@@ -96,40 +93,40 @@ const HomePage = () => {
 
     return (
         <Container>
-            {(citiesOptions.length === 0 ||  theme?.modeStatus === 'loading' || temp?.modeStatus === 'loading')  ? <Loading/> :
-                (<>
-                    <AutocompleteWrapper>
-                        <Autocomplete
-                            disablePortal
-                            options={citiesOptions.map((item) => item.EnglishName)}
-                            sx={{ width: 300 }}
-                            renderInput={(params) => <TextField {...params} label="City"/>}
-                            onChange={handleAutocompleteChange}
-                            />
-                    
-                    </AutocompleteWrapper>
+            <AutocompleteWrapper>
+                <Autocomplete
+                    disablePortal
+                    options={citiesOptions.map((item) => item.EnglishName)}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="City"/>}
+                    onChange={handleAutocompleteChange}
+                    />
+            
+            </AutocompleteWrapper>
 
-                    {chosenCityRed.forecast !== undefined && chosenCityRed.currentForecast !== undefined && typeof chosenCityRed.currentForecast !== 'object' ? (
-                        <> 
-                            <Typography variant='h2' sx={{marginBottom: '12px', fontWeight:'bold'}}>{chosenCityRed.data}</Typography>
-                            <Typography variant='h4' sx={{marginBottom: '20px'}}>Today is  {chosenCityRed.currentForecast}</Typography>
 
-                            <Typography variant='body1' sx={{marginBottom: '10px'}}>Add to favorites</Typography>
+            {loading ? (
+                <Container>
+                    <h1>Loading the city weather data...</h1>
+                    <Loading/>
+                </Container>) : (
+                <> 
+                    <Typography variant='h2' sx={{marginBottom: '12px', fontWeight:'bold'}}>{chosenCityRed.data}</Typography>
+                    <Typography variant='h4' sx={{marginBottom: '20px'}}>Today is  {chosenCityRed.currentForecast}</Typography>
 
-                            <IconButton onClick={() => addToFavorites(db, firebaseData, chosenCityRed)} sx={{marginBottom: '40px'}}>
-                                {firebaseData.findIndex(x => x.city === chosenCityRed.data) === -1
-                                ? <FavoriteBorderIcon fontSize="large" color={"primary"}/>
-                                : <FavoriteIcon fontSize="large" color={"primary"}/>}</IconButton>
-                    
-                            <StyledGrid container justifyContent='center' spacing={{ xs: 2, md: 3, lg: 6, xl: 2 }}>
-                                {chosenCityRed.forecast.map((item, index) => 
-                                <WeatherCard key={item.EpochDate} minTemp={item.Temperature.Minimum.Value} maxTemp={item.Temperature.Maximum.Value}
-                                day={days[new Date(item.Date).getDay()]}/>)}
-                            </StyledGrid>
-                        </>)
-                    : null}
-                </>)
-            }    
+                    <Typography variant='body1' sx={{marginBottom: '10px'}}>Add to favorites</Typography>
+
+                    <IconButton onClick={() => addToFavorites(db, firebaseData, chosenCityRed)} sx={{marginBottom: '40px'}}>
+                        {firebaseData.findIndex(x => x.city === chosenCityRed.data) === -1
+                        ? <FavoriteBorderIcon fontSize="large" color={"primary"}/>
+                        : <FavoriteIcon fontSize="large" color={"primary"}/>}</IconButton>
+            
+                    <StyledGrid container justifyContent='center' spacing={{ xs: 2, md: 3, lg: 6, xl: 2 }}>
+                        {chosenCityRed.forecast.map((item, index) => 
+                        <WeatherCard key={item.EpochDate} minTemp={item.Temperature.Minimum.Value} maxTemp={item.Temperature.Maximum.Value}
+                        day={days[new Date(item.Date).getDay()]}/>)}
+                    </StyledGrid>
+                </>)}
         </Container>)
 }
 
