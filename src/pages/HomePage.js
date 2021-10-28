@@ -43,11 +43,11 @@ const HomePage = () => {
     const getForecast = async (key) => {
         try {
             const res = await axios.get(
-            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
             );
         
             const currentRes = await axios.get(
-            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/currentconditions/v1/${key}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            `https://dataservice.accuweather.com/currentconditions/v1/${key}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
             );
         
             if (res && currentRes) {
