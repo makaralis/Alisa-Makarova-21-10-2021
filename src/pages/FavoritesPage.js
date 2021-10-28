@@ -1,38 +1,19 @@
 
 import "firebase/firestore";
 import { useFirestore } from "reactfire";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CityCard from '../components/CityCard';
 import useTheme from '../hooks/useTheme';
 import { Container, StyledGrid } from "../styles/homePageStyles";
 import { Typography } from "@mui/material";
+import useItems from "../hooks/useItems";
 
 const  FavoritesPage = () => {
   const [firebaseData, setFirebaseData] = useState([]);
   const db = useFirestore();
   const theme = useTheme();
 
-  const useItems = (col, callback, items) => {
-    useEffect(() => {
-      const fetchData = async () => {
-        await db
-          .collection(col)
-          .onSnapshot((snapshot) => {
-            let listItems = [];
-
-            listItems = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }));
-            callback(listItems);
-          });
-      };
-      fetchData();
-    }, []);
-    return items;
-  };
-
-  useItems("Favorites", setFirebaseData, firebaseData);
+  useItems(db, "Favorites", setFirebaseData, firebaseData);
 
   return (
     <Container>
@@ -43,7 +24,7 @@ const  FavoritesPage = () => {
 
               {firebaseData
                 .map(item => 
-                    <CityCard name={item.city} firebaseId={item.id} key={item.key} forecast={item.forecast} currentForecast={item.currentWeather} />
+                    <CityCard key={item.city} name={item.city} firebaseId={item.id} cityKey={item.key} forecast={item.forecast} currentForecast={item.currentWeather} />
                   )
               }
               </StyledGrid>

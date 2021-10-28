@@ -6,9 +6,8 @@ import { useDispatch } from "react-redux";
 import { chooseCity } from '../actions';
 import { useHistory} from 'react-router-dom';
 import { Container } from "../styles/homePageStyles";
-import { useState } from "react";
 
-const CityCard = ({name, key, forecast, firebaseId, currentForecast}) => {
+const CityCard = ({name, cityKey, forecast, firebaseId, currentForecast}) => {
   const dispatch = useDispatch();
   const db = useFirestore();
   const history = useHistory();
@@ -18,7 +17,7 @@ const CityCard = ({name, key, forecast, firebaseId, currentForecast}) => {
   }
 
   const backHome = () => {
-      dispatch(chooseCity(name, key, forecast, currentForecast));
+      dispatch(chooseCity(name, cityKey, forecast, currentForecast));
 
       history.push('/');
   }

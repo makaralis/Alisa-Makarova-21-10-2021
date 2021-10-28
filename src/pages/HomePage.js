@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chooseCity } from "../actions";
 import useTheme from "../hooks/useTheme";
 import useTempUnit from '../hooks/useTempUnit';
+import useItems from "../hooks/useItems";
 
 const HomePage = () => {
     const [citiesOptions, setCitiesOptions] = useState([]);
@@ -26,29 +27,9 @@ const HomePage = () => {
 
     const [firebaseData, setFirebaseData] = useState([]);
     const db = useFirestore();
+
     
-    const useItems = (col, callback, items) => {
-        useEffect(() => {
-          const fetchData = async () => {
-            await db
-              .collection(col)
-              .onSnapshot((snapshot) => {
-                let listItems = [];
-    
-                listItems = snapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  ...doc.data(),
-                }));
-                callback(listItems);
-              });
-          };
-          fetchData();
-        }, []);
-        
-        return items;
-      };
-    
-    useItems("Favorites", setFirebaseData, firebaseData);
+    useItems(db, "Favorites", setFirebaseData, firebaseData);
 
     const theme = useTheme();
     const temp = useTempUnit();
@@ -60,18 +41,18 @@ const HomePage = () => {
 
     const getCities = async () => {
         try {
-            const res = await axios.get(`https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`);
+            const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`);
     
             setCitiesOptions(res ? res.data : []);
     
             if (chosenCityRed.data.length < 1 && geoLocation.error !== undefined) {
                 const res = await axios.get(
-                  `http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
+                  `https://cors-anywhere.herokuapp.com/http://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
                 );
     
           
                 const currentRes = await axios.get(
-                  `https://dataservice.accuweather.com/currentconditions/v1/215854/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
+                  `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/currentconditions/v1/215854/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`
                 );
           
                dispatch(chooseCity("Tel Aviv", "215854", res.data.DailyForecasts, currentRes.data[0].WeatherText));
@@ -85,11 +66,11 @@ const HomePage = () => {
     const getForecast = async (key) => {
         try {
             const res = await axios.get(
-            `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
             );
         
             const currentRes = await axios.get(
-            `https://dataservice.accuweather.com/currentconditions/v1/${key}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
+            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/currentconditions/v1/${key}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}&details=true`
             );
         
             if (res && currentRes) {
