@@ -5,7 +5,7 @@
  You can save each city from the list to favorites by clicking on the heart icon.<br />
  You can also switch the theme or the temperature units.<br />
  
- Check-out the deployment link: 
+ Check-out the deployment link: https://find-weather-app.netlify.app/
 
  Technologies I used:
 
