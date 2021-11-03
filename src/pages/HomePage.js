@@ -91,7 +91,7 @@ const HomePage = () => {
         }
         
         getCities(geoLocation, (val) => setCitiesOptions(val), dispatch, chosenCityRed)}
-    , );
+    , []);
 
     useEffect(() => {
         if (isCitySelected && chosenCity !== '') {
