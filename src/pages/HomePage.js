@@ -91,7 +91,8 @@ const HomePage = () => {
         }
         
         getCities(geoLocation, (val) => setCitiesOptions(val), dispatch, chosenCityRed)}
-    , );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [geoLocation]);
 
     useEffect(() => {
         if (isCitySelected && chosenCity !== '') {
