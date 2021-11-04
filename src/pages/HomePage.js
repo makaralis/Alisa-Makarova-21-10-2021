@@ -29,7 +29,7 @@ const HomePage = () => {
     useItems(db, "Favorites", setFirebaseData, firebaseData);
 
     const chosenCityRed = useSelector((state) => {return state.chosenCityReducer});
-    const [loading, setLoading] = useState(chosenCityRed.data.length < 1 ? true : false);
+    const [loading, setLoading] = useState(chosenCityRed.data?.length < 1 || chosenCityRed.data === undefined ? true : false);
 
     const dispatch = useDispatch();
 
@@ -86,7 +86,7 @@ const HomePage = () => {
     }
 
     useEffect( () => {
-        if (geoLocation.loaded && geoLocation.error === undefined && chosenCityRed.data.length < 1) {
+        if (geoLocation.loaded && geoLocation.error === undefined && (chosenCityRed.data === undefined || chosenCityRed.data?.length < 1)) {
             setMyCityData(geoLocation, (val) => setIsCitySelected(val), (val) => setChosenCity(val), (val) => setCityKey(val), getForecast);
         }
         
@@ -113,8 +113,8 @@ const HomePage = () => {
                     />
             
             </AutocompleteWrapper>
-
-
+​
+​
             {loading ? (
                 <Container>
                     <h1>Loading the city weather data...</h1>
@@ -123,9 +123,9 @@ const HomePage = () => {
                 <> 
                     <Typography variant='h2' sx={{marginBottom: '12px', fontWeight:'bold'}}>{chosenCityRed.data}</Typography>
                     <Typography variant='h4' sx={{marginBottom: '20px'}}>Today is  {chosenCityRed.currentForecast}</Typography>
-
+​
                     <Typography variant='body1' sx={{marginBottom: '10px'}}>Add to favorites</Typography>
-
+​
                     <IconButton onClick={() => addToFavorites(db, firebaseData, chosenCityRed)} sx={{marginBottom: '40px'}}>
                         {firebaseData.findIndex(x => x.city === chosenCityRed.data) === -1
                         ? <FavoriteBorderIcon fontSize="large" color={"primary"}/>

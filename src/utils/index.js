@@ -25,9 +25,18 @@ export const setMyCityData = async (geoLocation, setIsCitySelected, setChosenCit
 
         if (data) {
             setIsCitySelected(true);
-            setChosenCity(data.ParentCity?.EnglishName);
-            setCityKey(data.ParentCity?.Key);
-            await getForecast(data.ParentCity?.Key);
+            //  if (data.ParentCity) {
+            //     setChosenCity(data.ParentCity?.EnglishName);
+            //     setCityKey(data.ParentCity?.Key);
+            //     await getForecast(data.ParentCity?.Key);
+            //  }
+
+            //  else  {
+                setChosenCity(data.EnglishName);
+                setCityKey(data.Key);
+                await getForecast(data.Key);
+            //  }
+            
         }
     }
     catch (err) {
@@ -47,8 +56,10 @@ export const getCities = async (geoLocation, setCitiesOptions, dispatch, chosenC
         setCitiesOptions(res ? res.data : []);
 
         if (chosenCityRed.data.length < 1 && geoLocation.error !== undefined) {
+            const keyTA = '215854';
+
             const res = await axios.get(
-              `https://dataservice.accuweather.com/forecasts/v1/daily/5day/215854?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY},
+              `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${keyTA}?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY},
               `,{
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,13 +69,14 @@ export const getCities = async (geoLocation, setCitiesOptions, dispatch, chosenC
 
       
             const currentRes = await axios.get(
-              `https://dataservice.accuweather.com/currentconditions/v1/215854/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`,
+              `https://dataservice.accuweather.com/currentconditions/v1/${keyTA}/?apikey=${process.env.REACT_APP_ACCUWEATHER_API_KEY}`,
               {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }
             );
+
       
            dispatch(chooseCity("Tel Aviv", "215854", res.data.DailyForecasts, currentRes.data[0].WeatherText));
           }
