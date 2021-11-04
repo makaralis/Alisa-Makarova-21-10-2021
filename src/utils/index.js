@@ -25,17 +25,17 @@ export const setMyCityData = async (geoLocation, setIsCitySelected, setChosenCit
 
         if (data) {
             setIsCitySelected(true);
-            //  if (data.ParentCity) {
-            //     setChosenCity(data.ParentCity?.EnglishName);
-            //     setCityKey(data.ParentCity?.Key);
-            //     await getForecast(data.ParentCity?.Key);
-            //  }
+             if (data.ParentCity) {
+                setChosenCity(data.ParentCity?.EnglishName);
+                setCityKey(data.ParentCity?.Key);
+                await getForecast(data.ParentCity?.Key);
+             }
 
-            //  else  {
+             else  {
                 setChosenCity(data.EnglishName);
                 setCityKey(data.Key);
                 await getForecast(data.Key);
-            //  }
+             }
             
         }
     }
